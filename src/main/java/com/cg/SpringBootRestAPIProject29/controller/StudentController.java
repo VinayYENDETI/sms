@@ -1,0 +1,47 @@
+package com.cg.SpringBootRestAPIProject29.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.SpringBootRestAPIProject29.entity.Student;
+import com.cg.SpringBootRestAPIProject29.service.StudentService;
+
+@RestController
+public class StudentController {
+	@Autowired
+	StudentService service;
+	@GetMapping("/students")
+	public List<Student> getAllStudent() {
+		return service.getAllStudent();
+	}
+	
+	@GetMapping("/student/{id}")
+	public Student getStudentById(@PathVariable int id) {
+		return service.getStudentById(id);
+	}
+	@PostMapping("/add")
+	public void createStudent(@RequestBody Student student) 
+	{
+		service.saveStudent(student);
+	}
+	@PutMapping("/update/{id}")
+	public Student updateStudent(@PathVariable int id,@RequestBody Student student) 
+	{
+		return service.updateStudent(id, student);
+	}
+	@DeleteMapping("/delete/{id}")
+	public String deleteStudent(@PathVariable int id)
+	{
+		service.deleteStudent(id);
+		return "deleted";
+	}
+
+}
